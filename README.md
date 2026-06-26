@@ -4,6 +4,23 @@
   A SaaS-ready Laravel starter kit package combining Livewire Volt and Alpine.js with a global dynamic modal and toast notification system, elegantly styled with Tailwind CSS.
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-11.x|12.x|13.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/Livewire-3.x-FB70A9?style=for-the-badge&logo=livewire" alt="Livewire Version">
+  <img src="https://img.shields.io/badge/Alpine_JS-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=white" alt="Alpine.js">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+</p>
+
+---
+
+## 📸 Demo
+
+*(Ganti URL gambar di bawah ini dengan hasil rekaman GIF dari aplikasi aslimu! Kamu bisa merekam layar lalu mengunggahnya ke GitHub agar terlihat keren)*
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kirabian/lavalpine-core/main/demo-placeholder.gif" alt="Lavalpine Demo Animation" width="700" onerror="this.src='https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjM0YjU1ZTU3Y2QwMzY4Y2NhYTNmZjM2ZjM3MmQwZDhhZjU1OWExZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/xT0xeJpnrWC4XWblN6/giphy.gif';">
+</p>
+
 ---
 
 ## 🌟 Features
