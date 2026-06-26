@@ -1,7 +1,7 @@
 <?php
 use function Livewire\Volt\{on};
 
-// Mendengarkan sinyal event 'show-toast' dari komponen mana pun di backend
+// Listen for 'show-toast' event from any backend component
 on(['show-toast' => function ($message) {
     $this->dispatch('trigger-toast', message: $message);
 }]);
@@ -14,7 +14,7 @@ on(['show-toast' => function ($message) {
         trigger(msg) {
             this.message = msg;
             this.show = true;
-            setTimeout(() => { this.show = false }, 3000); // Hilang otomatis dalam 3 detik
+            setTimeout(() => { this.show = false }, 3000); // Auto hide in 3 seconds
         }
     }"
     @trigger-toast.window="trigger($event.detail.message)"

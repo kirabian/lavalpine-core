@@ -2,7 +2,7 @@
 
 use function Livewire\Volt\{state, on};
 
-// State untuk menyimpan kondisi modal
+// State to store modal condition
 state([
     'isOpen' => false,
     'component' => null,
