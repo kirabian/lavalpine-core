@@ -7,31 +7,33 @@ on(['show-toast' => function ($message) {
 }]);
 ?>
 
-<div 
-    x-data="{ 
-        show: false, 
-        message: '',
-        trigger(msg) {
-            this.message = msg;
-            this.show = true;
-            setTimeout(() => { this.show = false }, 3000); // Auto hide in 3 seconds
-        }
-    }"
-    @trigger-toast.window="trigger($event.detail.message)"
-    class="fixed bottom-5 right-5 z-50"
-    style="display: none;"
-    x-show="show"
-    x-transition:enter="transform ease-out duration-300 transition-all"
-    x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-    x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-    x-transition:leave="transition ease-in duration-100"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
->
-    <div class="bg-white dark:bg-gray-800 border-l-4 border-emerald-500 shadow-xl rounded-r-xl p-4 flex items-center space-x-3 max-w-sm">
-        <svg class="w-6 h-6 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <p class="text-sm font-medium text-gray-900 dark:text-white" x-text="message"></p>
+<div>
+    <div 
+        x-data="{ 
+            show: false, 
+            message: '',
+            trigger(msg) {
+                this.message = msg;
+                this.show = true;
+                setTimeout(() => { this.show = false }, 3000); // Auto hide in 3 seconds
+            }
+        }"
+        @trigger-toast.window="trigger($event.detail.message)"
+        class="fixed bottom-5 right-5 z-50"
+        style="display: none;"
+        x-show="show"
+        x-transition:enter="transform ease-out duration-300 transition-all"
+        x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+        x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+    >
+        <div class="bg-white dark:bg-gray-800 border-l-4 border-emerald-500 shadow-xl rounded-r-xl p-4 flex items-center space-x-3 max-w-sm">
+            <svg class="w-6 h-6 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-sm font-medium text-gray-900 dark:text-white" x-text="message"></p>
+        </div>
     </div>
 </div>
