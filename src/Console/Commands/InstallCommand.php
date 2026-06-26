@@ -19,11 +19,11 @@ class InstallCommand extends Command
 
         // 1. Jalankan 'composer require livewire/volt' otomatis di latar belakang
         $this->info('📦 Mengunduh dependensi Livewire Volt via Composer...');
-        $this->runCommand(['composer', 'require', 'livewire/volt']);
+        $this->executeProcess(['composer', 'require', 'livewire/volt']);
 
         // 2. Jalankan 'php artisan volt:install' otomatis
         $this->info('⚡ Mengonfigurasi arsitektur Livewire Volt...');
-        $this->runCommand(['php', 'artisan', 'volt:install']);
+        $this->executeProcess(['php', 'artisan', 'volt:install']);
 
         // 3. Eksekusi Scaffolding File .stub Lavalpine Core
         $this->info('🏗️  Menyinkronkan komponen antarmuka Lavalpine...');
@@ -62,7 +62,7 @@ class InstallCommand extends Command
     /**
      * Helper internal untuk mengeksekusi perintah terminal secara real-time
      */
-    protected function runCommand(array $command)
+    protected function executeProcess(array $command)
     {
         $process = new Process($command, base_path(), null, null, null);
         $process->setTimeout(null);
