@@ -70,29 +70,4 @@
 
     </div>
 
-    <!-- Livewire Volt Component for the Modal Demo -->
-    @php
-    use function Livewire\Volt\{state};
-    @endphp
-    
-    @volt('welcome-demo-modal')
-    <div class="p-8 text-center space-y-6">
-        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-            <svg class="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        </div>
-        <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Modal Connected!</h2>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                This is a Livewire Volt component dynamically rendered inside a global modal. Awesome, right?
-            </p>
-        </div>
-        <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
-            <button @click="$dispatch('close-lavalpine-modal')" class="w-full inline-flex justify-center rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 sm:w-auto">
-                Close Modal
-            </button>
-        </div>
-    </div>
-    @endvolt
 @endsection

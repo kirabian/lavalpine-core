@@ -51,6 +51,9 @@ class InstallCommand extends Command
         $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-modal.blade.php.stub', resource_path('views/livewire/lavalpine-modal.blade.php'));
         $this->comment('✔ Core component [views/livewire/lavalpine-modal.blade.php] successfully installed.');
         
+        // Copy Demo Modal Component (Volt)
+        $filesystem->copy(__DIR__.'/../../../stubs/welcome-demo-modal.blade.php.stub', resource_path('views/livewire/welcome-demo-modal.blade.php'));
+        
         // Copy Core Toast Notification Component
         $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-toast.blade.php.stub', resource_path('views/livewire/lavalpine-toast.blade.php'));
         $this->comment('✔ Helper component [views/livewire/lavalpine-toast.blade.php] successfully installed.');
