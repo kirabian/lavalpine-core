@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <!-- Background Design -->
     <div class="min-h-screen relative overflow-hidden bg-gray-900 flex items-center justify-center selection:bg-indigo-500 selection:text-white">
         <!-- Abstract gradient shapes -->
@@ -93,4 +95,4 @@
         </div>
     </div>
     @endvolt
-</x-app-layout>
+@endsection
