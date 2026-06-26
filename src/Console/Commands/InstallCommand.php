@@ -43,6 +43,10 @@ class InstallCommand extends Command
         $filesystem->copy(__DIR__.'/../../../stubs/app.blade.php.stub', resource_path('views/layouts/app.blade.php'));
         $this->comment('✔ Main layout [views/layouts/app.blade.php] successfully installed.');
         
+        // Copy Premium Welcome UI
+        $filesystem->copy(__DIR__.'/../../../stubs/welcome.blade.php.stub', resource_path('views/welcome.blade.php'));
+        $this->comment('✔ Premium Welcome UI [views/welcome.blade.php] successfully installed.');
+        
         // Copy Core Modal Component (Volt)
         $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-modal.blade.php.stub', resource_path('views/livewire/lavalpine-modal.blade.php'));
         $this->comment('✔ Core component [views/livewire/lavalpine-modal.blade.php] successfully installed.');
