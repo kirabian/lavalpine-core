@@ -1,9 +1,4 @@
 # 🏔️ Lavalpine Core
-
-<p align="center">
-  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTZrcnQyOXFqNDhhdnAzZTNpeDA5MmNxOGZ6ODZveGQyZDcwNHd3biZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/xT9IgzoKnwFNmISR8I/giphy.gif" alt="Coding Animation" width="100%" style="border-radius: 12px; max-height: 400px; object-fit: cover;">
-</p>
-
 <p align="center">
   A SaaS-ready Laravel starter kit package combining Livewire Volt and Alpine.js with a global dynamic modal and toast notification system, elegantly styled with Tailwind CSS.
 </p>
