@@ -21,78 +21,91 @@ Whether you're building a dashboard, an admin panel, or a full-fledged SaaS prod
 
 ---
 
-## 🎯 Features
+## 🎯 Core Features
 
-- **Global Dynamic Modal System:** Render any Livewire Volt component inside a beautifully animated modal from anywhere in your application using a simple Alpine.js event dispatch. No more hidden `<dialog>` elements polluting your views!
-- **Global Toast Notification:** A sleek, self-dismissing toast notification system ready out of the box. Notify users of successful actions straight from your PHP backend.
-- **Modern Tech Stack:** Built natively for the modern TALL stack ecosystem, prioritizing Single File Components (Volt) for maximum developer experience.
-- **Automated Installation:** Simple CLI command to automatically inject the blueprints and assets directly into your fresh Laravel project.
-- **Tailwind v4 Ready:** Fully pre-configured for the latest Tailwind CSS standalone engine.
+Lavalpine transforms your standard Laravel installation into a highly interactive, SPA-like experience without writing a single line of React or Vue.
+
+### 1. Real-Time Data Table (`lavalpine-live-table`)
+A powerful, reactive data grid.
+- **Instant Search:** Filters rows instantly as you type (`wire:model.live.debounce`).
+- **Inline Editing:** Click on specific cells to edit and save data directly to the database without page reloads.
+- **Real-Time Polling:** Automatically refreshes data (`wire:poll`) to keep users in sync.
+
+> *[Insert GIF showing Live Table inline editing here]*
+
+### 2. Multi-Step Onboarding Wizard (`lavalpine-wizard`)
+A complex form broken down into digestible steps.
+- **Alpine.js Transitions:** Slick sliding animations between steps.
+- **Backend Validation:** Validates data on the backend (Livewire) before allowing the user to proceed.
+- **Database Ready:** Automatically saves the aggregated form data to the provided `Registration` model.
+
+> *[Insert GIF showing Wizard transitions here]*
+
+### 3. Global Dynamic Modal System (`lavalpine-modal`)
+A universally accessible modal system built with Alpine.js and Livewire.
+- **Trigger Anywhere:** Can be triggered from any component using a simple event.
+- **Dynamic Content:** Renders dynamic Livewire components inside the modal body on the fly.
+
+### 4. Global Toast Notifications (`lavalpine-toast`)
+A sleek, non-intrusive notification system ready out of the box. Supports `success`, `error`, `info`, and `warning` states.
+
+### 5. Spotlight Command Palette (`lavalpine-spotlight`)
+A macOS-style global search interface triggered via `Ctrl + K` (or `Cmd + K`).
+
+> *[Insert GIF showing Spotlight Command Palette here]*
 
 ---
 
-## 🛠️ System Requirements
+## 🛠️ System Dependencies
 
+To ensure a smooth experience and prevent version conflicts, Lavalpine explicitly requires the following modern stack:
 - **PHP:** 8.2 or higher
 - **Laravel Framework:** 11.x, 12.x, or 13.x
-- **Livewire Volt:** 1.0 or higher
-- **Node.js & NPM:** For building Vite assets
+- **Livewire:** v3.x (with Volt)
+- **Tailwind CSS:** v4.x (Uses explicit `@custom-variant dark`)
 
 ---
 
-## 🚀 Installation & Usage
+## 🚀 Quick Start / Installation
 
-### 1. Require the Package
-Install Lavalpine Core via Composer in your Laravel application:
+Getting started is incredibly easy. You can install and configure the entire stack in less than a minute.
 
 ```bash
+# 1. Require the package via Composer
 composer require lavalpine/core
-```
 
-### 2. Run the Installer
-Execute the artisan command. This will scaffold the global modal, toast, layout, and Tailwind CSS configurations directly into your application's `resources` directory:
-
-```bash
+# 2. Run the installer to publish stubs, models, and migrations
 php artisan lavalpine:install
-```
 
-### 3. Start Development
-Compile your assets and start your local server:
-
-```bash
+# 3. Start your Vite development server
 npm run dev
 ```
 
+> **Note:** The installation command will automatically run `php artisan migrate` to set up the required tables for the Wizard component.
+
 ---
 
-## 💡 How to Use
+## 💡 Code Snippets
+
+Integrating Lavalpine components into your existing code is seamless.
+
+### Triggering a Toast Notification
+You can trigger a beautiful toast directly from your Livewire component or Controller:
+
+```php
+// In your Livewire Component
+$this->dispatch('show-toast', message: 'Data berhasil disimpan!', type: 'success');
+```
 
 ### Triggering the Global Modal
-To trigger the global modal from any blade file, simply dispatch the `open-lavalpine-modal` event from Alpine.js and provide the name of your target Volt component:
+To open a modal from any Blade view using Alpine:
 
 ```html
-<button @click="$dispatch('open-lavalpine-modal', { component: 'your-volt-component-name' })" class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+<button @click="$dispatch('open-lavalpine-modal', { component: 'your-component' })">
     Open Modal
 </button>
 ```
 
-### Triggering Toast Notifications
-To trigger a toast notification directly from your backend Volt logic after an action (like saving data):
-
-```php
-<?php
-use function Livewire\Volt\{state};
-
-$save = function () {
-    // Save your data here...
-    
-    // Trigger the global toast
-    $this->dispatch('show-toast', message: 'Successfully saved the data!');
-};
-?>
-```
-
----
 
 ## 🎨 Customization
 
