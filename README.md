@@ -11,6 +11,10 @@
   <a href="https://packagist.org/packages/lavalpine/core"><img src="https://img.shields.io/packagist/dt/lavalpine/core?style=for-the-badge&color=blue" alt="Total Downloads"></a>
 </p>
 
+<p align="center">
+  <img src="art/welcome.png" alt="Lavalpine Welcome Screen" width="800">
+</p>
+
 ---
 
 ## 🌟 Introduction
@@ -31,7 +35,7 @@ A powerful, reactive data grid.
 - **Inline Editing:** Click on specific cells to edit and save data directly to the database without page reloads.
 - **Real-Time Polling:** Automatically refreshes data (`wire:poll`) to keep users in sync.
 
-> *[Insert GIF showing Live Table inline editing here]*
+<p align="center"><img src="art/live-table.png" alt="Live Table Preview" width="800"></p>
 
 ### 2. Multi-Step Onboarding Wizard (`lavalpine-wizard`)
 A complex form broken down into digestible steps.
@@ -39,7 +43,7 @@ A complex form broken down into digestible steps.
 - **Backend Validation:** Validates data on the backend (Livewire) before allowing the user to proceed.
 - **Database Ready:** Automatically saves the aggregated form data to the provided `Registration` model.
 
-> *[Insert GIF showing Wizard transitions here]*
+<p align="center"><img src="art/wizard.png" alt="Wizard Preview" width="800"></p>
 
 ### 3. Global Dynamic Modal System (`lavalpine-modal`)
 A universally accessible modal system built with Alpine.js and Livewire.
@@ -51,8 +55,6 @@ A sleek, non-intrusive notification system ready out of the box. Supports `succe
 
 ### 5. Spotlight Command Palette (`lavalpine-spotlight`)
 A macOS-style global search interface triggered via `Ctrl + K` (or `Cmd + K`).
-
-> *[Insert GIF showing Spotlight Command Palette here]*
 
 ---
 
