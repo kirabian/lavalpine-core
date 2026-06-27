@@ -1,44 +1,38 @@
 <?php
 
 use Livewire\Volt\Component;
+use App\Models\Registration;
 
 new class extends Component {
     public string $search = '';
     
-    // Mock data for the table
-    public array $users = [];
-    
-    public function mount() {
-        $this->users = [
-            ['id' => 1, 'name' => 'Alice Smith', 'email' => 'alice@example.com', 'role' => 'Admin', 'status' => 'Active'],
-            ['id' => 2, 'name' => 'Bob Johnson', 'email' => 'bob@example.com', 'role' => 'Editor', 'status' => 'Inactive'],
-            ['id' => 3, 'name' => 'Charlie Brown', 'email' => 'charlie@example.com', 'role' => 'User', 'status' => 'Active'],
-            ['id' => 4, 'name' => 'Diana Prince', 'email' => 'diana@example.com', 'role' => 'User', 'status' => 'Active'],
-            ['id' => 5, 'name' => 'Evan Wright', 'email' => 'evan@example.com', 'role' => 'Editor', 'status' => 'Active'],
-        ];
-    }
-    
     public function updateRole($id, $newRole) {
-        // Sleep to clearly show the loading spinner state
-        sleep(1);
-        foreach ($this->users as &$user) {
-            if ($user['id'] === $id) {
-                $user['role'] = $newRole;
-            }
+        // Find and update real database record
+        $user = Registration::find($id);
+        if ($user) {
+            $user->update(['role' => $newRole]);
         }
     }
     
     public function with() {
         return [
-            'filteredUsers' => collect($this->users)
-                ->filter(function ($user) {
-                    if (empty($this->search)) return true;
-                    $search = strtolower($this->search);
-                    return str_contains(strtolower($user['name']), $search) || 
-                           str_contains(strtolower($user['email']), $search) ||
-                           str_contains(strtolower($user['role']), $search);
+            'filteredUsers' => Registration::when($this->search, function ($query) {
+                    $search = '%' . $this->search . '%';
+                    $query->where('name', 'like', $search)
+                          ->orWhere('email', 'like', $search)
+                          ->orWhere('role', 'like', $search);
                 })
-                ->values()
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->map(function($user) {
+                    return [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => ucfirst($user->role),
+                        'status' => 'Active', // Mocked active status
+                    ];
+                })
                 ->all()
         ];
     }
