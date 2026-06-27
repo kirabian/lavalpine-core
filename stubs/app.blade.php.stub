@@ -16,5 +16,6 @@
     @livewireScripts
     <livewire:lavalpine-modal />
     <livewire:lavalpine-toast />
+    <livewire:lavalpine-spotlight />
 </body>
 </html>

@@ -57,6 +57,10 @@ class InstallCommand extends Command
         // Copy Core Toast Notification Component
         $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-toast.blade.php.stub', resource_path('views/livewire/lavalpine-toast.blade.php'));
         $this->comment('✔ Helper component [views/livewire/lavalpine-toast.blade.php] successfully installed.');
+        
+        // Copy Core Spotlight Component
+        $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-spotlight.blade.php.stub', resource_path('views/livewire/lavalpine-spotlight.blade.php'));
+        $this->comment('✔ Global component [views/livewire/lavalpine-spotlight.blade.php] successfully installed.');
 
         // Copy Tailwind v4 CSS Directive
         $filesystem->copy(__DIR__.'/../../../stubs/app.css.stub', resource_path('css/app.css'));
