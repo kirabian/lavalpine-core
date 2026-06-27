@@ -37,15 +37,20 @@ new class extends Component {
             'terms' => 'accepted'
         ]);
         
-        // Simulate save process
-        sleep(1);
+        // Save to database
+        \App\Models\Registration::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'company' => $this->company,
+            'role' => $this->role,
+        ]);
         
         // Reset form
         $this->reset();
         $this->currentStep = 1;
         
         // Dispatch success toast
-        $this->dispatch('show-toast', message: 'Registration complete!', type: 'success');
+        $this->dispatch('show-toast', message: 'Registration successfully saved to database!', type: 'success');
     }
 }
 ?>

@@ -79,9 +79,20 @@ class InstallCommand extends Command
             }
         }
 
+        // Database & Models
+        $filesystem->copy(__DIR__.'/../../../stubs/Registration.php.stub', app_path('Models/Registration.php'));
+        $this->comment('✔ Registration Model [app/Models/Registration.php] successfully installed.');
+        
+        $filesystem->copy(__DIR__.'/../../../stubs/create_registrations_table.php.stub', database_path('migrations/2026_01_01_000000_create_registrations_table.php'));
+        $this->comment('✔ Database Migration [create_registrations_table.php] successfully installed.');
+
         // Copy Tailwind v4 CSS Directive
         $filesystem->copy(__DIR__.'/../../../stubs/app.css.stub', resource_path('css/app.css'));
         $this->comment('✔ Modern configuration [css/app.css] successfully updated with Tailwind directives.');
+
+        // Run migrations
+        $this->info('🗄️ Running database migrations...');
+        $this->executeProcess(['php', 'artisan', 'migrate']);
 
         $this->info('🎉 [SUCCESS] Lavalpine Stack successfully installed!');
         $this->info('👉 Please run `npm run dev` in your project terminal.');
