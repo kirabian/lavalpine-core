@@ -11,10 +11,13 @@ new #[Layout('layouts.app')] class extends Component {
 <div x-data="{ 
         darkMode: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) 
      }"
-     x-init="$watch('darkMode', val => { 
-        if (val) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); } 
-        else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); } 
-     })"
+     x-init="
+        if (darkMode) document.documentElement.classList.add('dark');
+        $watch('darkMode', val => { 
+            if (val) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); } 
+            else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); } 
+        })
+     "
      class="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 pb-20">
     
     <!-- Navbar -->
