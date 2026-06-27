@@ -1,0 +1,180 @@
+<?php
+
+use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
+
+new class extends Component {
+    use WithFileUploads;
+
+    // Autocomplete State
+    public string $searchQuery = '';
+    public string $selectedItem = '';
+    public array $items = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape', 'Honeydew', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Papaya', 'Strawberry', 'Watermelon'];
+    
+    // Date Picker State
+    public string $selectedDate = '';
+    
+    // File Upload State
+    public $photo;
+
+    public function with() {
+        return [
+            'filteredItems' => collect($this->items)
+                ->filter(fn($item) => empty($this->searchQuery) || str_contains(strtolower($item), strtolower($this->searchQuery)))
+                ->take(5) // Limit results
+                ->values()
+                ->all()
+        ];
+    }
+    
+    public function selectItem($item) {
+        $this->selectedItem = $item;
+        $this->searchQuery = '';
+    }
+    
+    public function removeSelection() {
+        $this->selectedItem = '';
+    }
+    
+    public function savePhoto() {
+        $this->validate([
+            'photo' => 'image|max:2048', // 2MB Max
+        ]);
+        
+        // Simulate upload delay
+        sleep(1); 
+        
+        $this->dispatch('show-toast', message: 'Photo processed & uploaded successfully!', type: 'success');
+        $this->reset('photo');
+    }
+}
+?>
+
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden p-6 space-y-10">
+    
+    <div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">Interactive UI Blocks</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Combining Livewire's backend state with Alpine.js frontend magic.</p>
+    </div>
+
+    <!-- 1. Autocomplete / Searchable Dropdown -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="col-span-1">
+            <h4 class="text-md font-medium text-gray-900 dark:text-white">Autocomplete</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Searchable dropdown with instant filtering via Livewire.</p>
+        </div>
+        <div class="col-span-2 relative" x-data="{ open: false }">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Favorite Fruit</label>
+            
+            @if($selectedItem)
+                <div class="flex items-center gap-2 mt-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-2 rounded-md border border-indigo-200 dark:border-indigo-800/50 w-fit">
+                    <span class="font-medium">{{ $selectedItem }}</span>
+                    <button wire:click="removeSelection" class="hover:text-indigo-900 dark:hover:text-indigo-100 transition-colors">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            @else
+                <div class="relative">
+                    <input 
+                        wire:model.live.debounce.150ms="searchQuery" 
+                        @focus="open = true" 
+                        @click.away="open = false"
+                        @keydown.escape="open = false"
+                        type="text" 
+                        class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border" 
+                        placeholder="Search fruits (e.g. Apple)...">
+                    
+                    <div wire:loading wire:target="searchQuery" class="absolute right-3 top-2.5">
+                        <svg class="animate-spin h-4 w-4 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </div>
+                </div>
+
+                <!-- Dropdown -->
+                <div x-show="open && '{{ $searchQuery }}'.length > 0" x-transition x-cloak class="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm border border-gray-200 dark:border-gray-700">
+                    @forelse($filteredItems as $item)
+                        <div wire:click="selectItem('{{ $item }}')" @click="open = false" class="cursor-pointer hover:bg-indigo-600 hover:text-white text-gray-900 dark:text-gray-200 select-none relative py-2 pl-3 pr-9 transition-colors">
+                            {{ $item }}
+                        </div>
+                    @empty
+                        <div class="text-gray-500 dark:text-gray-400 select-none relative py-2 pl-3 pr-9">
+                            No results found.
+                        </div>
+                    @endforelse
+                </div>
+            @endif
+        </div>
+    </div>
+
+    <!-- 2. Date Picker -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100 dark:border-gray-700/50">
+        <div class="col-span-1">
+            <h4 class="text-md font-medium text-gray-900 dark:text-white">Date Picker</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Native date input enhanced with Alpine and Tailwind.</p>
+        </div>
+        <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Select Date</label>
+            <div class="relative max-w-xs">
+                <input wire:model.live="selectedDate" type="date" class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border cursor-pointer">
+            </div>
+            @if($selectedDate)
+                <p class="mt-2 text-sm text-green-600 dark:text-green-400">
+                    Selected: <span class="font-semibold">{{ \Carbon\Carbon::parse($selectedDate)->format('F j, Y') }}</span>
+                </p>
+            @endif
+        </div>
+    </div>
+
+    <!-- 3. File Upload with Preview -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100 dark:border-gray-700/50">
+        <div class="col-span-1">
+            <h4 class="text-md font-medium text-gray-900 dark:text-white">File Upload Preview</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Livewire handles temporary URL generation instantly.</p>
+        </div>
+        <div class="col-span-2">
+            <form wire:submit="savePhoto" class="space-y-4">
+                <div class="flex items-center justify-center w-full max-w-md">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 transition-colors relative overflow-hidden">
+                        
+                        @if ($photo)
+                            <!-- Image Preview -->
+                            <img src="{{ $photo->temporaryUrl() }}" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span class="text-white font-medium">Click to change</span>
+                            </div>
+                        @else
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 2MB)</p>
+                            </div>
+                        @endif
+                        <input wire:model="photo" id="dropzone-file" type="file" class="hidden" accept="image/*" />
+                    </label>
+                </div>
+                
+                @error('photo') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                
+                <!-- Loading State during upload to temporary directory -->
+                <div wire:loading wire:target="photo" class="text-sm text-indigo-500 font-medium flex items-center gap-2">
+                    <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    Uploading...
+                </div>
+
+                @if($photo)
+                    <div>
+                        <button type="submit" wire:loading.attr="disabled" wire:target="savePhoto" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            <span wire:loading.remove wire:target="savePhoto">Save Image</span>
+                            <span wire:loading wire:target="savePhoto" class="flex items-center">
+                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                Processing...
+                            </span>
+                        </button>
+                    </div>
+                @endif
+            </form>
+        </div>
+    </div>
+
+</div>

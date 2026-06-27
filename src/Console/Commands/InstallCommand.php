@@ -61,6 +61,23 @@ class InstallCommand extends Command
         // Copy Core Spotlight Component
         $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-spotlight.blade.php.stub', resource_path('views/livewire/lavalpine-spotlight.blade.php'));
         $this->comment('✔ Global component [views/livewire/lavalpine-spotlight.blade.php] successfully installed.');
+        
+        // Copy Advanced Features Stubs
+        $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-live-table.blade.php.stub', resource_path('views/livewire/lavalpine-live-table.blade.php'));
+        $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-wizard.blade.php.stub', resource_path('views/livewire/lavalpine-wizard.blade.php'));
+        $filesystem->copy(__DIR__.'/../../../stubs/lavalpine-ui-blocks.blade.php.stub', resource_path('views/livewire/lavalpine-ui-blocks.blade.php'));
+        $filesystem->copy(__DIR__.'/../../../stubs/dashboard.blade.php.stub', resource_path('views/livewire/dashboard.blade.php'));
+        $this->comment('✔ Advanced UI components (Live Table, Wizard, Dashboard) successfully installed.');
+
+        // Register Dashboard Route
+        $routePath = base_path('routes/web.php');
+        if ($filesystem->exists($routePath)) {
+            $routes = $filesystem->get($routePath);
+            if (!str_contains($routes, "Volt::route('/dashboard'")) {
+                $filesystem->append($routePath, "\n\\Livewire\\Volt\\Volt::route('/dashboard', 'dashboard')->name('dashboard');\n");
+                $this->comment('✔ Dashboard route successfully registered in routes/web.php.');
+            }
+        }
 
         // Copy Tailwind v4 CSS Directive
         $filesystem->copy(__DIR__.'/../../../stubs/app.css.stub', resource_path('css/app.css'));
