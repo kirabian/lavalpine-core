@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Background Design -->
-    <div class="min-h-screen relative overflow-hidden bg-gray-900 flex items-center justify-center selection:bg-indigo-500 selection:text-white">
+    <div x-data class="min-h-screen relative overflow-hidden bg-gray-900 flex items-center justify-center selection:bg-indigo-500 selection:text-white">
         <!-- Abstract gradient shapes -->
         <div class="absolute top-0 -left-40 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-70 animate-blob"></div>
         <div class="absolute top-0 -right-40 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-70 animate-blob animation-delay-2000"></div>
